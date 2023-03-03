@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option csharp_namespace = "RemoteExecutor.Node";
+
+package remoteexecutor.v1.node;
+
+service Node {
+    rpc Execute (ExecuteRequest) returns (stream ExecuteReply);
+    rpc Cancel (CancelRequest) returns (CancelReply);
+    rpc Query (QueryRequest) returns (QueryReply);
+}
+
+message ExecuteRequest {
+    string id = 1;
+    repeated string arguments = 2;
+    string user = 3;
+}
+
+message CancelRequest {
+    string id = 1;
+}
+
+message QueryRequest {
+}
+
+message ExecuteReply {
+    string message = 1;
+    optional int32 processId = 2;
+}
+
+message CancelReply {
+    string message = 1;
+}
+
+message QueryReply {
+    repeated RunningProcess runningProcesses = 1;
+}
+
+message RunningProcess {
+    string processId = 1;
+}

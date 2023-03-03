@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+option csharp_namespace = "RemoteExecutor.Dispatch"
+
+package remoteexecutor.v1.dispatch;
+
+service Dispatch {
+    rpc RegisterNode (RegisterNodeRequest) returns (RegisterNodeReply);
+    rpc IsRegistered (IsRegisteredRequest) returns (IsRegisteredReply);
+    rpc UnregisterNode (UnregisterNodeRequest) returns (UnregisterNodeReply);
+    rpc SignCertificateRequest (CertificateSignRequest) returns (CertificateSignReply);
+}
+
+message RegisterNodeRequest {
+    string id = 1;
+    string channel = 2;
+    string name = 3;
+    string host = 4;
+    string version = 5;
+    repeated Process processes = 6;
+}
+
+message IsRegisteredRequest {
+    string id = 1;
+}
+
+message UnregisterNodeRequest {
+    string id = 1;
+}
+
+message CertificateSignRequest {
+    string dn = 1;
+    string hashAlgorithmName = 2;
+    bytes publicKeyInfo = 3;
+}
+
+message RegisterNodeReply {
+    string message = 1;
+}
+
+message IsRegisteredReply {
+    string message = 1;
+}
+
+message UnregisterNodeReply {
+    string message = 1;
+}
+
+message CertificateSignReply {
+    string message = 1;
+    bytes certificate = 2;
+}
+
+message Process {
+    string id = 1;
+    string name = 2;
+    bool hasArguments = 3;
+    repeated string roles = 4;
+}
+
